@@ -1,0 +1,909 @@
+From 2659eab42f54e9d0f3cb46237dcae08e70e2dec9 Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Thu, 18 Mar 2021 01:30:12 -0400
+Subject: [PATCH 1/5] part1 works but not valgrind-clean
+
+---
+ README.txt                          |  26 ++++++++++
+ part1/.mdb-lookup-server-nc-2.c.swp | Bin 0 -> 12288 bytes
+ part1/mdb-lookup-server-nc-1        | Bin 0 -> 8696 bytes
+ part1/mdb-lookup-server-nc-1.sh     |   4 ++
+ part1/mdb-lookup-server-nc-2        | Bin 0 -> 13088 bytes
+ part1/mdb-lookup-server-nc-2.c      |  72 ++++++++++++++++++++++++++++
+ part1/mdb-lookup-server-nc.sh       |   4 ++
+ 7 files changed, 106 insertions(+)
+ create mode 100644 README.txt
+ create mode 100644 part1/.mdb-lookup-server-nc-2.c.swp
+ create mode 100755 part1/mdb-lookup-server-nc-1
+ create mode 100755 part1/mdb-lookup-server-nc-1.sh
+ create mode 100755 part1/mdb-lookup-server-nc-2
+ create mode 100644 part1/mdb-lookup-server-nc-2.c
+ create mode 100755 part1/mdb-lookup-server-nc.sh
+
+diff --git a/README.txt b/README.txt
+new file mode 100644
+index 0000000..8a7d39a
+--- /dev/null
++++ b/README.txt
+@@ -0,0 +1,26 @@
++jay ram
++jcr2211
++lab5
++
++===PART 1===
++b)
++
++3140 32249 32249 32249 ?           -1 Ss       0   0:00  \_ sshd: jcr2211 [priv]
++32249 32515 32249 32249 ?           -1 S     4781   0:00  |   \_ sshd: jcr2211@pts/116
++32515 32516 32516 32516 pts/116   7373 Ss    4781   0:00  |       \_ -bash
++32516 18744 18744 32516 pts/116   7373 T     4781   0:00  |           \_ /bin/sh ./mdb-lookup-server-nc-1.sh 33333
++18744 18747 18744 32516 pts/116   7373 T     4781   0:00  |           |   \_ nc -l 33333
++32516  7373  7373 32516 pts/116   7373 S+    4781   0:00  |           \_ ./mdb-lookup-server-nc-1 5869
++ 7373  7374  7373 32516 pts/116   7373 S+    4781   0:00  |               \_ /bin/sh ./mdb-lookup-server-nc.sh 5869
++ 7374  7376  7373 32516 pts/116   7373 S+    4781   0:00  |                   \_ cat mypipe-7374
++ 7374  7377  7373 32516 pts/116   7373 S+    4781   0:00  |                   \_ nc -l 5869
++ 7374  7378  7373 32516 pts/116   7373 S+    4781   0:00  |                   \_ /bin/sh /home/jae/cs3157-pub/bin/mdb-lookup-cs3157
++ 7378  7379  7373 32516 pts/116   7373 S+    4781   0:00  |                       \_ /home/jae/cs3157-pub/bin/mdb-lookup /home/jae/cs3157-pub/bin/mdb-cs3157
++
++the shell scripts end with .sh:
++mdb-lookup-server-nc.sh
++mdb-lookup-server-nc-1.sh
++
++c)
++
++
+diff --git a/part1/.mdb-lookup-server-nc-2.c.swp b/part1/.mdb-lookup-server-nc-2.c.swp
+new file mode 100644
+index 0000000000000000000000000000000000000000..0c50d227c53a73be471e89cc6e6ed14ebce040a6
+GIT binary patch
+literal 12288
+zcmeI2PiQ1X6o+d)*{-YN-W2t1FM*yvNzY8o8aA1LUUr2wvaV4uhP9`=CMmb4yQ!*4
+zHiWoG@uD|H59>(;5j^P4i{6Z)9z;RigCJhLc#%cWUsd;H<IJ+`!Hc8@zRYxW&8t^m
+zy($>ez1DM2K1K60Er!>9jD7m+GcR3xy~*~@F!pjRJDqmh+_~i|PNVpi9jcqJQ~|?S
+z&9>(r3)84K7Z#D!?QoFvrqevXG%ThSmz!KpXYq7r=C;D#&d{!pGjO;K40V5c{urC>
+zwCz?u>7StE_pcmoCvNu6fHU9>I0MdrGvEw31J1x9GoXtj><Z?5M>X%W)%%gL_v+HU
+zIRnmsGvEw31I~am;0!ne&VV!E3^)VM!2i%dlrZ*!$Jm>9A$k1&fAstR?|T{h3;Y7E
+zfuF$_;1h5ayb2VM-~u=go&a-T7IeVF;34oJcmQ0#hp|7wAK*vu8Tbgi1`5yv=Rp^=
+z!6V>K@cS{wegYqWtKbUgf<<usZpMBCUxUxVhu~eX3od};;D@7(eGk3`UxGdG9(V(6
+zfe5UCd2keb2N&OfufQJo7`zYO25$l5>K))-&VV!E3^)VMfHU9>I0OHgfn7#;Nv?-7
+zqt*iR`jYcNX<5VPFkFvhFIwjm=V{7gE%J<c%-dz2SN;jZej!Ds`}j)2rEHQv@q{U9
+zE(aouG*4d4d=uA0<caUC79#0RC2Qn2DL}{?uFK9|B6#3$MM9&A`jJR^f;jciMDk8_
+z$@H|Jy;hCFkg}Ze!X&H8*5#FR=bF_Gr6WDG?O|Q?DX78*h|x5?$MW)vTx!aOgC3Ws
+z$z*RjSpoQ4hA&pd8g<L0*SSeDs4bY`wxrOU@~zBdNIIuT%4nN-$_G5t<(J3CBY%ks
+zna5nI1Kv*4$PNrP$qZPj5&au8Kx>oAxjw)A^x4Ok&(vs%TD2WJuUy&;Ng&nMf>^|y
+zE*6dUf@n0#9xCO$2->3sB0MmREJxYcX(M&T$;Pv5!Y}hUy|E&8MyMSuV7w7Ys@Ga&
+zG}|xmXKwoV@r>HQoF?lAPbQbQtmZLKlidj`D^X*VL$_J9DP?6<wd{GtYNKH%J-JvW
+z@zO`bmgm@D<d5|47w2f5_ie=+B28{0%hZ@z{VuH64yfzr^3uP}je0KbcRZL<vAUnT
+zsV1AIjY}pH3eL;{4HvOu_VyMM!cLB(tRMJO%5NGGW~H&WP(hu!Q){M3<ET&+X~Oj=
+zd#<p@O)onl*?M7~S<yNqOI#14G|l7S)T3tD>HwJBDduEhJIq8HL?Sbr8arS;Zc<qt
+zbzE%L@Dq~RK0-aae^3NS6zwJgzbv$^N^?=*jLBu7FzyaBTUo@knM1EB#~2%4SFsi1
+zo)lS}4iip`!%X0On%P)7(5ALksJ9EQCY#NfFxIM*RP-j=L~fcG;V7ayO`Lq@+4?q~
+Jtq<#r{R7i0;IjY#
+
+literal 0
+HcmV?d00001
+
+diff --git a/part1/mdb-lookup-server-nc-1 b/part1/mdb-lookup-server-nc-1
+new file mode 100755
+index 0000000000000000000000000000000000000000..7f2369a87918606ac86b53ac87d6122869d526a6
+GIT binary patch
+literal 8696
+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
+V=YCmsRR#TLRLXpw1r_z`{|m^xe9Hg;
+
+literal 0
+HcmV?d00001
+
+diff --git a/part1/mdb-lookup-server-nc-1.sh b/part1/mdb-lookup-server-nc-1.sh
+new file mode 100755
+index 0000000..05253cf
+--- /dev/null
++++ b/part1/mdb-lookup-server-nc-1.sh
+@@ -0,0 +1,4 @@
++#!/bin/sh
++
++mkfifo mypipe-$$
++cat mypipe-$$ | nc -l $1 | /home/jae/cs3157-pub/bin/mdb-lookup-cs3157 > mypipe-$$
+diff --git a/part1/mdb-lookup-server-nc-2 b/part1/mdb-lookup-server-nc-2
+new file mode 100755
+index 0000000000000000000000000000000000000000..49bc37e75911fa1014abda9b4fc2b365581bb344
+GIT binary patch
+literal 13088
+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
+J6%}>c{~L~fs5t-t
+
+literal 0
+HcmV?d00001
+
+diff --git a/part1/mdb-lookup-server-nc-2.c b/part1/mdb-lookup-server-nc-2.c
+new file mode 100644
+index 0000000..fc3241d
+--- /dev/null
++++ b/part1/mdb-lookup-server-nc-2.c
+@@ -0,0 +1,72 @@
++
++/*
++ * mdb-lookup-server-nc-1.c
++ */
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <sys/wait.h>
++#include <sys/types.h>
++#include <unistd.h>
++
++static void die(const char *s)
++{
++    perror(s);
++    exit(1);
++}
++
++int isTerminated(){
++
++}
++
++int main(int argc, char **argv)
++{
++    
++	printf("port number: ");
++	char* str = malloc(64);
++	int num_p  = 0;
++	int p[256]; //caps at 256 processes	
++	while(scanf("%s",str)){
++			pid_t pid;
++			pid = fork();
++			p[num_p] =  pid;
++			num_p++;
++			if (pid < 0) {
++			die("fork failed");
++			} else if (pid == 0) {
++			// child process
++			fprintf(stderr, "[pid=%d] ", (int)getpid());
++			num_p++;
++			p[++num_p] = (int)getpid();
++			fprintf(stderr,"mdb-lookup-server started on port %s\n", str);
++
++			execl("./mdb-lookup-server-nc.sh", "mdb-lookup-server-nc.sh", 
++				str, (char *)0);
++			die("execl failed");
++			} else {
++			// parent process
++			sleep(1);
++			for (int i = 0;i<num_p+1;i++){
++				if(waitpid(p[i], NULL, WNOHANG) > 0){
++					fprintf(stderr, "> process terminated: [pid=%d]\n", p[i]);
++					p[i] = (int)getpid(); // write own pid to array element
++
++				}
++			}
++
++			fprintf(stderr,"port number: ");
++			/*if (waitpid(pid,
++					NULL, // no status
++					0) // no options
++				!= pid)
++				die("waitpid failed");*/
++			//fprintf(stderr, "[pid=%d] ", (int)pid);
++			//fprintf(stderr, "mdb-lookup-server terminated\n");
++			}
++	}
++	
++	//garbage collection
++	free(str);
++    return 0;
++}
++
+diff --git a/part1/mdb-lookup-server-nc.sh b/part1/mdb-lookup-server-nc.sh
+new file mode 100755
+index 0000000..05253cf
+--- /dev/null
++++ b/part1/mdb-lookup-server-nc.sh
+@@ -0,0 +1,4 @@
++#!/bin/sh
++
++mkfifo mypipe-$$
++cat mypipe-$$ | nc -l $1 | /home/jae/cs3157-pub/bin/mdb-lookup-cs3157 > mypipe-$$
+-- 
+2.17.1
+
+
+From 4370d9cdd6ba7d0298033ca23ab6d55ac6e2baef Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Thu, 18 Mar 2021 05:07:44 -0400
+Subject: [PATCH 2/5] it works but it uses sleep(1) so idk if its legit
+
+---
+ part1/.mdb-lookup-server-nc-2.c.swp | Bin 12288 -> 0 bytes
+ part1/Makefile                      |  19 +++++++++++++++++
+ part1/mdb-lookup-server-nc-1        | Bin 8696 -> 0 bytes
+ part1/mdb-lookup-server-nc-2        | Bin 13088 -> 0 bytes
+ part1/mdb-lookup-server-nc-2.c      |  31 ++++++++++++++--------------
+ 5 files changed, 34 insertions(+), 16 deletions(-)
+ delete mode 100644 part1/.mdb-lookup-server-nc-2.c.swp
+ create mode 100644 part1/Makefile
+ delete mode 100755 part1/mdb-lookup-server-nc-1
+ delete mode 100755 part1/mdb-lookup-server-nc-2
+
+diff --git a/part1/.mdb-lookup-server-nc-2.c.swp b/part1/.mdb-lookup-server-nc-2.c.swp
+deleted file mode 100644
+index 0c50d227c53a73be471e89cc6e6ed14ebce040a6..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 12288
+zcmeI2PiQ1X6o+d)*{-YN-W2t1FM*yvNzY8o8aA1LUUr2wvaV4uhP9`=CMmb4yQ!*4
+zHiWoG@uD|H59>(;5j^P4i{6Z)9z;RigCJhLc#%cWUsd;H<IJ+`!Hc8@zRYxW&8t^m
+zy($>ez1DM2K1K60Er!>9jD7m+GcR3xy~*~@F!pjRJDqmh+_~i|PNVpi9jcqJQ~|?S
+z&9>(r3)84K7Z#D!?QoFvrqevXG%ThSmz!KpXYq7r=C;D#&d{!pGjO;K40V5c{urC>
+zwCz?u>7StE_pcmoCvNu6fHU9>I0MdrGvEw31J1x9GoXtj><Z?5M>X%W)%%gL_v+HU
+zIRnmsGvEw31I~am;0!ne&VV!E3^)VM!2i%dlrZ*!$Jm>9A$k1&fAstR?|T{h3;Y7E
+zfuF$_;1h5ayb2VM-~u=go&a-T7IeVF;34oJcmQ0#hp|7wAK*vu8Tbgi1`5yv=Rp^=
+z!6V>K@cS{wegYqWtKbUgf<<usZpMBCUxUxVhu~eX3od};;D@7(eGk3`UxGdG9(V(6
+zfe5UCd2keb2N&OfufQJo7`zYO25$l5>K))-&VV!E3^)VMfHU9>I0OHgfn7#;Nv?-7
+zqt*iR`jYcNX<5VPFkFvhFIwjm=V{7gE%J<c%-dz2SN;jZej!Ds`}j)2rEHQv@q{U9
+zE(aouG*4d4d=uA0<caUC79#0RC2Qn2DL}{?uFK9|B6#3$MM9&A`jJR^f;jciMDk8_
+z$@H|Jy;hCFkg}Ze!X&H8*5#FR=bF_Gr6WDG?O|Q?DX78*h|x5?$MW)vTx!aOgC3Ws
+z$z*RjSpoQ4hA&pd8g<L0*SSeDs4bY`wxrOU@~zBdNIIuT%4nN-$_G5t<(J3CBY%ks
+zna5nI1Kv*4$PNrP$qZPj5&au8Kx>oAxjw)A^x4Ok&(vs%TD2WJuUy&;Ng&nMf>^|y
+zE*6dUf@n0#9xCO$2->3sB0MmREJxYcX(M&T$;Pv5!Y}hUy|E&8MyMSuV7w7Ys@Ga&
+zG}|xmXKwoV@r>HQoF?lAPbQbQtmZLKlidj`D^X*VL$_J9DP?6<wd{GtYNKH%J-JvW
+z@zO`bmgm@D<d5|47w2f5_ie=+B28{0%hZ@z{VuH64yfzr^3uP}je0KbcRZL<vAUnT
+zsV1AIjY}pH3eL;{4HvOu_VyMM!cLB(tRMJO%5NGGW~H&WP(hu!Q){M3<ET&+X~Oj=
+zd#<p@O)onl*?M7~S<yNqOI#14G|l7S)T3tD>HwJBDduEhJIq8HL?Sbr8arS;Zc<qt
+zbzE%L@Dq~RK0-aae^3NS6zwJgzbv$^N^?=*jLBu7FzyaBTUo@knM1EB#~2%4SFsi1
+zo)lS}4iip`!%X0On%P)7(5ALksJ9EQCY#NfFxIM*RP-j=L~fcG;V7ayO`Lq@+4?q~
+Jtq<#r{R7i0;IjY#
+
+diff --git a/part1/Makefile b/part1/Makefile
+new file mode 100644
+index 0000000..0bbe8bf
+--- /dev/null
++++ b/part1/Makefile
+@@ -0,0 +1,19 @@
++CC  = gcc
++
++INCLUDES = 
++CFLAGS   = -g -Wall $(INCLUDES)
++
++LDFLAGS = -g 
++LDLIBS = 
++
++mdb-lookup-server-nc-1:
++
++mdb-lookup-server-nc-2:
++
++.PHONY: clean
++clean:
++	rm -f *.o mdb-lookup-server-nc-1 mdb-lookup-server-nc-2
++
++.PHONY: all
++all: clean
++
+diff --git a/part1/mdb-lookup-server-nc-1 b/part1/mdb-lookup-server-nc-1
+deleted file mode 100755
+index 7f2369a87918606ac86b53ac87d6122869d526a6..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 8696
+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
+V=YCmsRR#TLRLXpw1r_z`{|m^xe9Hg;
+
+diff --git a/part1/mdb-lookup-server-nc-2 b/part1/mdb-lookup-server-nc-2
+deleted file mode 100755
+index 49bc37e75911fa1014abda9b4fc2b365581bb344..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 13088
+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
+J6%}>c{~L~fs5t-t
+
+diff --git a/part1/mdb-lookup-server-nc-2.c b/part1/mdb-lookup-server-nc-2.c
+index fc3241d..16d3d20 100644
+--- a/part1/mdb-lookup-server-nc-2.c
++++ b/part1/mdb-lookup-server-nc-2.c
+@@ -15,29 +15,30 @@ static void die(const char *s)
+     exit(1);
+ }
+ 
+-int isTerminated(){
+-
+-}
+ 
+ int main(int argc, char **argv)
+ {
+     
+ 	printf("port number: ");
+-	char* str = malloc(64);
++
++	//var declarations
++	char str[64];
+ 	int num_p  = 0;
+-	int p[256]; //caps at 256 processes	
+-	while(scanf("%s",str)){
++	int p[256] = {0}; //caps at 256 processes and inits to zeroes to prevent reading uninit bytes	
++	
++	while(scanf("%s",str)){ //loop
++			
+ 			pid_t pid;
+ 			pid = fork();
++			//store child pid in p[]
+ 			p[num_p] =  pid;
+ 			num_p++;
++
+ 			if (pid < 0) {
+ 			die("fork failed");
+ 			} else if (pid == 0) {
+ 			// child process
+ 			fprintf(stderr, "[pid=%d] ", (int)getpid());
+-			num_p++;
+-			p[++num_p] = (int)getpid();
+ 			fprintf(stderr,"mdb-lookup-server started on port %s\n", str);
+ 
+ 			execl("./mdb-lookup-server-nc.sh", "mdb-lookup-server-nc.sh", 
+@@ -45,9 +46,11 @@ int main(int argc, char **argv)
+ 			die("execl failed");
+ 			} else {
+ 			// parent process
+-			sleep(1);
++			sleep(1); //sleeps 1 so it doesn't conflict with 
++				
+ 			for (int i = 0;i<num_p+1;i++){
+-				if(waitpid(p[i], NULL, WNOHANG) > 0){
++				pid_t child = waitpid(p[i], NULL, WNOHANG); 
++				if(child > 0){
+ 					fprintf(stderr, "> process terminated: [pid=%d]\n", p[i]);
+ 					p[i] = (int)getpid(); // write own pid to array element
+ 
+@@ -55,18 +58,14 @@ int main(int argc, char **argv)
+ 			}
+ 
+ 			fprintf(stderr,"port number: ");
+-			/*if (waitpid(pid,
+-					NULL, // no status
+-					0) // no options
+-				!= pid)
+-				die("waitpid failed");*/
++			
+ 			//fprintf(stderr, "[pid=%d] ", (int)pid);
+ 			//fprintf(stderr, "mdb-lookup-server terminated\n");
+ 			}
+ 	}
+ 	
+ 	//garbage collection
+-	free(str);
++	//free(str);
+     return 0;
+ }
+ 
+-- 
+2.17.1
+
+
+From b30da8303c179fb65186ab7611033b57f1f341cd Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Sat, 20 Mar 2021 17:49:44 -0400
+Subject: [PATCH 3/5] changed to jae's way of checking if process died bc i
+ dont want to lose points :(
+
+---
+ part1/Makefile                 |  2 +-
+ part1/mdb-lookup-server-nc-2.c | 61 ++++++++++++----------------------
+ 2 files changed, 22 insertions(+), 41 deletions(-)
+
+diff --git a/part1/Makefile b/part1/Makefile
+index 0bbe8bf..1682480 100644
+--- a/part1/Makefile
++++ b/part1/Makefile
+@@ -12,7 +12,7 @@ mdb-lookup-server-nc-2:
+ 
+ .PHONY: clean
+ clean:
+-	rm -f *.o mdb-lookup-server-nc-1 mdb-lookup-server-nc-2
++	rm -f *.o mdb-lookup-server-nc-1 mdb-lookup-server-nc-2 mypipe*
+ 
+ .PHONY: all
+ all: clean
+diff --git a/part1/mdb-lookup-server-nc-2.c b/part1/mdb-lookup-server-nc-2.c
+index 16d3d20..08d2afd 100644
+--- a/part1/mdb-lookup-server-nc-2.c
++++ b/part1/mdb-lookup-server-nc-2.c
+@@ -23,49 +23,30 @@ int main(int argc, char **argv)
+ 
+ 	//var declarations
+ 	char str[64];
+-	int num_p  = 0;
+-	int p[256] = {0}; //caps at 256 processes and inits to zeroes to prevent reading uninit bytes	
+ 	
+ 	while(scanf("%s",str)){ //loop
+-			
+-			pid_t pid;
+-			pid = fork();
+-			//store child pid in p[]
+-			p[num_p] =  pid;
+-			num_p++;
+-
+-			if (pid < 0) {
+-			die("fork failed");
+-			} else if (pid == 0) {
+-			// child process
+-			fprintf(stderr, "[pid=%d] ", (int)getpid());
+-			fprintf(stderr,"mdb-lookup-server started on port %s\n", str);
+-
+-			execl("./mdb-lookup-server-nc.sh", "mdb-lookup-server-nc.sh", 
+-				str, (char *)0);
+-			die("execl failed");
+-			} else {
+-			// parent process
+-			sleep(1); //sleeps 1 so it doesn't conflict with 
+-				
+-			for (int i = 0;i<num_p+1;i++){
+-				pid_t child = waitpid(p[i], NULL, WNOHANG); 
+-				if(child > 0){
+-					fprintf(stderr, "> process terminated: [pid=%d]\n", p[i]);
+-					p[i] = (int)getpid(); // write own pid to array element
+-
+-				}
+-			}
+-
+-			fprintf(stderr,"port number: ");
+-			
+-			//fprintf(stderr, "[pid=%d] ", (int)pid);
+-			//fprintf(stderr, "mdb-lookup-server terminated\n");
+-			}
++		pid_t pid;
++		pid = fork();
++	if (pid < 0) {
++		die("fork failed");
++	} else if (pid == 0) {
++	// child process
++		fprintf(stderr, "[pid=%d] ", (int)getpid());
++		fprintf(stderr,"mdb-lookup-server started on port %s\n", str);
++		execl("./mdb-lookup-server-nc.sh", "mdb-lookup-server-nc.sh", 
++		str, (char *)0);
++		die("execl failed");
++	} else {
++	// parent process
++		sleep(1); //sleeps 1 so it doesn't conflict with child 
++		pid_t child = waitpid((pid_t)-1, NULL, WNOHANG); 
++	while (child != 0){
++		fprintf(stderr, "> process terminated: [pid=%d]\n", (int) child);
++		child = waitpid((pid_t)-1, NULL, WNOHANG); 
++		}
++		fprintf(stderr,"port number: ");
++		}
+ 	}
+-	
+-	//garbage collection
+-	//free(str);
+     return 0;
+ }
+ 
+-- 
+2.17.1
+
+
+From e4abb105a2fa8b9a3a6e145b981a61aa2910826a Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Sat, 20 Mar 2021 20:58:08 -0400
+Subject: [PATCH 4/5] updated readme
+
+---
+ README.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/README.txt b/README.txt
+index 8a7d39a..89a4525 100644
+--- a/README.txt
++++ b/README.txt
+@@ -4,6 +4,8 @@ lab5
+ 
+ ===PART 1===
+ b)
++Works as expected, runs properly and valgrind-clean
++
+ 
+ 3140 32249 32249 32249 ?           -1 Ss       0   0:00  \_ sshd: jcr2211 [priv]
+ 32249 32515 32249 32249 ?           -1 S     4781   0:00  |   \_ sshd: jcr2211@pts/116
+@@ -22,5 +24,6 @@ mdb-lookup-server-nc.sh
+ mdb-lookup-server-nc-1.sh
+ 
+ c)
++valgrind-clean, initially used my own method of storing all processes in an array and then using a loop to check them all.
+ 
+-
++==PART 2==
+-- 
+2.17.1
+
+
+From fe3a3d1dc8e4e723ffbd06e5377ca89ab2d78400 Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Sat, 20 Mar 2021 22:07:10 -0400
+Subject: [PATCH 5/5] changed nc-2, fixed bigs and made it check for valid
+ ports
+
+---
+ part1/Makefile                  |  4 +--
+ part1/mdb-lookup-server-nc-1.sh |  4 ---
+ part1/mdb-lookup-server-nc-2.c  | 59 +++++++++++++++++++--------------
+ 3 files changed, 36 insertions(+), 31 deletions(-)
+ delete mode 100755 part1/mdb-lookup-server-nc-1.sh
+
+diff --git a/part1/Makefile b/part1/Makefile
+index 1682480..f022d02 100644
+--- a/part1/Makefile
++++ b/part1/Makefile
+@@ -6,10 +6,10 @@ CFLAGS   = -g -Wall $(INCLUDES)
+ LDFLAGS = -g 
+ LDLIBS = 
+ 
+-mdb-lookup-server-nc-1:
+-
+ mdb-lookup-server-nc-2:
+ 
++mdb-lookup-server-nc-1:
++
+ .PHONY: clean
+ clean:
+ 	rm -f *.o mdb-lookup-server-nc-1 mdb-lookup-server-nc-2 mypipe*
+diff --git a/part1/mdb-lookup-server-nc-1.sh b/part1/mdb-lookup-server-nc-1.sh
+deleted file mode 100755
+index 05253cf..0000000
+--- a/part1/mdb-lookup-server-nc-1.sh
++++ /dev/null
+@@ -1,4 +0,0 @@
+-#!/bin/sh
+-
+-mkfifo mypipe-$$
+-cat mypipe-$$ | nc -l $1 | /home/jae/cs3157-pub/bin/mdb-lookup-cs3157 > mypipe-$$
+diff --git a/part1/mdb-lookup-server-nc-2.c b/part1/mdb-lookup-server-nc-2.c
+index 08d2afd..4a3e74e 100644
+--- a/part1/mdb-lookup-server-nc-2.c
++++ b/part1/mdb-lookup-server-nc-2.c
+@@ -1,6 +1,6 @@
+ 
+ /*
+- * mdb-lookup-server-nc-1.c
++ * mdb-lookup-server-nc-2.c
+  */
+ 
+ #include <stdio.h>
+@@ -14,37 +14,46 @@ static void die(const char *s)
+     perror(s);
+     exit(1);
+ }
+-
++void findDeadChildren(){ //lol
++	pid_t child = waitpid((pid_t)-1, NULL, WNOHANG); 
++	while (child > 0){
++		fprintf(stderr, "> process terminated: [pid=%d]\n", (int) child);
++		child = waitpid((pid_t)-1, NULL, WNOHANG); 
++	 }
++	printf("port number: ");
++	
++}
+ 
+ int main(int argc, char **argv)
+ {
+-    
++	    
+ 	printf("port number: ");
+-
+-	//var declarations
+-	char str[64];
+ 	
+-	while(scanf("%s",str)){ //loop
++	char str[64]; //buffer / port size
++	
++	while(fgets(str,64,stdin) != NULL){
++		//error check
++		if(str[0] == '\n'){
++			findDeadChildren();
++			continue;
++		}
++		if(atoi(str)<10000 || atoi(str) > 64000){ //from jae ANN
++			die("invalid port");
++        }
+ 		pid_t pid;
+ 		pid = fork();
+-	if (pid < 0) {
+-		die("fork failed");
+-	} else if (pid == 0) {
+-	// child process
+-		fprintf(stderr, "[pid=%d] ", (int)getpid());
+-		fprintf(stderr,"mdb-lookup-server started on port %s\n", str);
+-		execl("./mdb-lookup-server-nc.sh", "mdb-lookup-server-nc.sh", 
+-		str, (char *)0);
+-		die("execl failed");
+-	} else {
+-	// parent process
+-		sleep(1); //sleeps 1 so it doesn't conflict with child 
+-		pid_t child = waitpid((pid_t)-1, NULL, WNOHANG); 
+-	while (child != 0){
+-		fprintf(stderr, "> process terminated: [pid=%d]\n", (int) child);
+-		child = waitpid((pid_t)-1, NULL, WNOHANG); 
+-		}
+-		fprintf(stderr,"port number: ");
++		  if (pid < 0) {
++			  die("fork failed");
++		  } else if (pid == 0) {
++		  // child process
++			  fprintf(stderr, "[pid=%d] ", (int)getpid());
++			  fprintf(stderr,"mdb-lookup-server started on port %s", str);
++			  execl("./mdb-lookup-server-nc.sh", "mdb-lookup-server-nc.sh", str, (char *)0);
++			  die("execl failed");
++		  } else {
++		  // parent process
++		  sleep(1); //sleeps 1 so it doesn't conflict with child 
++		  findDeadChildren();
+ 		}
+ 	}
+     return 0;
+-- 
+2.17.1
+
