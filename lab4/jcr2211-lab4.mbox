@@ -1,0 +1,1442 @@
+From 0a3442807b212261f10d3e093c8927b7988a82ea Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Mon, 8 Mar 2021 12:36:04 -0500
+Subject: [PATCH 1/8] edited file buffer example given by jae
+
+---
+ part1/Makefile     |  19 ++++++++++++++++++
+ part1/mdb-lookup   | Bin 0 -> 19376 bytes
+ part1/mdb-lookup.c |  49 +++++++++++++++++++++++++++++++++++++++++++++
+ part1/x.txt        |  40 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 108 insertions(+)
+ create mode 100644 part1/Makefile
+ create mode 100755 part1/mdb-lookup
+ create mode 100644 part1/mdb-lookup.c
+ create mode 100644 part1/x.txt
+
+diff --git a/part1/Makefile b/part1/Makefile
+new file mode 100644
+index 0000000..6f530b3
+--- /dev/null
++++ b/part1/Makefile
+@@ -0,0 +1,19 @@
++CC  = gcc
++CXX = g++
++
++INCLUDES = -I../../lab3/solutions/part1
++CFLAGS   = -g -Wall $(INCLUDES)
++CXXFLAGS = -g -Wall $(INCLUDES)
++
++LDFLAGS = -g -L../../lab3/solutions/part1
++LDLIBS = -lmylist
++
++mdb-lookup:
++
++.PHONY: clean
++clean:
++	rm -f *.o *~ 
++
++.PHONY: all
++all: clean 
++
+diff --git a/part1/mdb-lookup b/part1/mdb-lookup
+new file mode 100755
+index 0000000000000000000000000000000000000000..3cd10dead8fa14e6d09eb6129342ba828bf743a8
+GIT binary patch
+literal 19376
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/part1/mdb-lookup.c b/part1/mdb-lookup.c
+new file mode 100644
+index 0000000..338f3c5
+--- /dev/null
++++ b/part1/mdb-lookup.c
+@@ -0,0 +1,49 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include "mdb.h"
++#include <string.h>
++#include "mylist.h"
++static void printEntry(void *p){
++	printf("%s  %s\n",(char *)p, (char *)p+16); 
++
++}
++int main(int argc, char **argv)
++{
++	
++	if (argc != 2) {
++		fprintf(stderr, "%s\n", "usage: mdb-lookup <file_name>");
++		exit(1);
++	}
++	char *filename = argv[1];
++	FILE *fp = fopen(filename, "r");
++	if (fp == NULL) {
++	perror(filename);
++	exit(1);
++	}
++	char buf[1001];
++	struct List chain;
++	initList(&chain);
++
++	while (fread(buf, 40, 1, fp) == 1) {
++		printf("\n ");
++		
++		addFront(&chain,buf);
++
++		if (fputs(buf, stdout) == EOF) {
++			perror("can’t write to stdout");
++			exit(1);
++		}
++		else{
++			printf(" %s",buf+16);
++			//fputs(buf + 16, stdout);
++		}
++	}
++	traverseList(&chain,&printEntry);
++	printf("\n");
++	if (ferror(fp)) {
++		perror(filename);
++		exit(1);
++	}
++	fclose(fp);
++	return 0;
++}
+diff --git a/part1/x.txt b/part1/x.txt
+new file mode 100644
+index 0000000..bbf21dc
+--- /dev/null
++++ b/part1/x.txt
+@@ -0,0 +1,40 @@
++weed
++weed
++weed
++wwwwwwwwwwwweed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++eed
++weed
++weed
++
+-- 
+2.17.1
+
+
+From 967a009cab7796eac467b0f2859e64c5c175fe36 Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Tue, 9 Mar 2021 00:58:33 -0500
+Subject: [PATCH 2/8] more functional
+
+---
+ README.txt         |   3 +++
+ part1/mdb-lookup   | Bin 19376 -> 19360 bytes
+ part1/mdb-lookup.c |  32 ++++++++++++++++++++++----------
+ 3 files changed, 25 insertions(+), 10 deletions(-)
+
+diff --git a/README.txt b/README.txt
+index 66dfd3e..3347961 100644
+--- a/README.txt
++++ b/README.txt
+@@ -9,3 +9,6 @@ The description should indicate whether your solution for the part is
+ working or not.  You may also want to include anything else you would
+ like to communicate to the grader such as extra functionalities you
+ implemented or how you tried to fix your non-working code.
++
++
++added "add me on instagram -> @jaycram"
+diff --git a/part1/mdb-lookup b/part1/mdb-lookup
+index 3cd10dead8fa14e6d09eb6129342ba828bf743a8..592ab72f37bd836016945d6a69fac9ba4f36f665 100755
+GIT binary patch
+delta 4191
+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
+
+delta 4417
+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
+
+diff --git a/part1/mdb-lookup.c b/part1/mdb-lookup.c
+index 338f3c5..60844b6 100644
+--- a/part1/mdb-lookup.c
++++ b/part1/mdb-lookup.c
+@@ -1,10 +1,18 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include "mdb.h"
++//#include "mdb.h"
+ #include <string.h>
+ #include "mylist.h"
++struct MdbRec {
++    char name[16];
++    char  msg[24];
++};
++
++
++int i = 0;
+ static void printEntry(void *p){
+-	printf("%s  %s\n",(char *)p, (char *)p+16); 
++	struct MdbRec* m = (struct MdbRec*) p;
++	printf("%d: {%s} said {%s}\n",i++, m->name, m->msg); 
+ 
+ }
+ int main(int argc, char **argv)
+@@ -23,21 +31,25 @@ int main(int argc, char **argv)
+ 	char buf[1001];
+ 	struct List chain;
+ 	initList(&chain);
+-
++	int z = 0;
+ 	while (fread(buf, 40, 1, fp) == 1) {
+-		printf("\n ");
+-		
+-		addFront(&chain,buf);
+-
+-		if (fputs(buf, stdout) == EOF) {
++		struct MbdRec* m;
++		m = (struct MdbRec*) malloc(sizeof(struct MbdRec));
++		if (buf == NULL) {
+ 			perror("can’t write to stdout");
+ 			exit(1);
+ 		}
+ 		else{
+-			printf(" %s",buf+16);
++			printf("%d: {%s} said {%s}",++z, buf, buf+16);
++			//addFront(&chain,buf+16);
++			//strcpy(m->name,buf);
++			//strcpy(m->msg ,buf+16);
++			//addAfter(&list,
++			addBack(&chain,m);
++
+ 			//fputs(buf + 16, stdout);
+ 		}
+-	}
++			}
+ 	traverseList(&chain,&printEntry);
+ 	printf("\n");
+ 	if (ferror(fp)) {
+-- 
+2.17.1
+
+
+From 7ee04eeab6ed15091e1e6d1b5a56167a139175f6 Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Fri, 12 Mar 2021 16:48:37 -0500
+Subject: [PATCH 3/8] part1 is sorta done <procrastinated lol> but there seems
+ to be a bug for strings greater than 5.
+
+---
+ part1/mdb-lookup   | Bin 19360 -> 19976 bytes
+ part1/mdb-lookup.c |  64 +++++++++++++++++++++++++++++----------------
+ 2 files changed, 41 insertions(+), 23 deletions(-)
+
+diff --git a/part1/mdb-lookup b/part1/mdb-lookup
+index 592ab72f37bd836016945d6a69fac9ba4f36f665..79697a7c326db74134fdf6337f626cd002d66e2e 100755
+GIT binary patch
+delta 7372
+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
+DXN40C
+
+delta 6185
+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
+Vb9Hg22@a$9Zn-Yb#Wh-(@-J6R>M#HR
+
+diff --git a/part1/mdb-lookup.c b/part1/mdb-lookup.c
+index 60844b6..1247d04 100644
+--- a/part1/mdb-lookup.c
++++ b/part1/mdb-lookup.c
+@@ -1,23 +1,21 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+-//#include "mdb.h"
+ #include <string.h>
+ #include "mylist.h"
+-struct MdbRec {
+-    char name[16];
+-    char  msg[24];
+-};
+-
+-
++#include "mdb.h"
++//do not use add back!
+ int i = 0;
++char search[5];
+ static void printEntry(void *p){
+ 	struct MdbRec* m = (struct MdbRec*) p;
+-	printf("%d: {%s} said {%s}\n",i++, m->name, m->msg); 
+-
++	i++;
++	if(strstr(m->name,search)||strstr(m->msg,search)){	
++		printf(" %d: {%s} said {%s}\n",i, m->name, m->msg); 
++	}
+ }
+ int main(int argc, char **argv)
+ {
+-	
++	//read file	
+ 	if (argc != 2) {
+ 		fprintf(stderr, "%s\n", "usage: mdb-lookup <file_name>");
+ 		exit(1);
+@@ -25,32 +23,52 @@ int main(int argc, char **argv)
+ 	char *filename = argv[1];
+ 	FILE *fp = fopen(filename, "r");
+ 	if (fp == NULL) {
+-	perror(filename);
+-	exit(1);
++		perror(filename);
++		exit(1);
+ 	}
++	//init list
+ 	char buf[1001];
+ 	struct List chain;
+ 	initList(&chain);
+-	int z = 0;
++	//build list
++	struct Node *last = chain.head;
+ 	while (fread(buf, 40, 1, fp) == 1) {
+-		struct MbdRec* m;
+-		m = (struct MdbRec*) malloc(sizeof(struct MbdRec));
+ 		if (buf == NULL) {
+ 			perror("can’t write to stdout");
+ 			exit(1);
+ 		}
+ 		else{
+-			printf("%d: {%s} said {%s}",++z, buf, buf+16);
+-			//addFront(&chain,buf+16);
+-			//strcpy(m->name,buf);
+-			//strcpy(m->msg ,buf+16);
+-			//addAfter(&list,
+-			addBack(&chain,m);
++			struct MdbRec *n = malloc(40);
++		
++			strcpy(n->name,buf);
++			strcpy(n->msg,buf+16);	
++			last = addAfter(&chain,last,n);
++		}
++	}
+ 
+-			//fputs(buf + 16, stdout);
++	//loop
++	
++	printf("lookup: ");
++	while(fgets(search,5,stdin) != NULL ){
++		if(search == NULL){
++			break;
+ 		}
+-			}
++		for(int z = 0;z<5;z++){
++			if(search[z] == '\n')
++				search[z] = '\0';
++		}
++		
++		i = 0;
++		traverseList(&chain,&printEntry);
++		fflush(stdout);	
++		printf("\nlookup: ");
++	}
+ 	traverseList(&chain,&printEntry);
++
++
++	traverseList(&chain,&free);
++	removeAllNodes(&chain);
++
+ 	printf("\n");
+ 	if (ferror(fp)) {
+ 		perror(filename);
+-- 
+2.17.1
+
+
+From 4f5215479a86973aa244cdb2c965c0272d2efa2b Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Fri, 12 Mar 2021 17:52:04 -0500
+Subject: [PATCH 4/8] part 1 finished! now time to do xtra stuff
+
+---
+ part1/.mdb-lookup.c.swp | Bin 0 -> 12288 bytes
+ part1/Makefile          |   4 +---
+ part1/mdb-lookup        | Bin 19976 -> 0 bytes
+ part1/mdb-lookup.c      |  23 +++++++----------------
+ part1/x.txt             |  40 ----------------------------------------
+ 5 files changed, 8 insertions(+), 59 deletions(-)
+ create mode 100644 part1/.mdb-lookup.c.swp
+ delete mode 100755 part1/mdb-lookup
+ delete mode 100644 part1/x.txt
+
+diff --git a/part1/.mdb-lookup.c.swp b/part1/.mdb-lookup.c.swp
+new file mode 100644
+index 0000000000000000000000000000000000000000..ce4c5ff76f22add73887ded5c89ceaf3fd47e673
+GIT binary patch
+literal 12288
+zcmeI2PiP!f9LHbP%UG*ouY$j9NtoSiGP`M_HUA`s6sl>#N)?PnXJ_8*PBS|*yqQf5
+z+eASSOF;!sB1piaMCwt!h#)8ko`iZW1y6zqy^7!8+Zi_-wdBx?_?CQ_o%i0n_j{lB
+z`z<WlR^!EU=jqIJL*VtO5HI}p+-vu@Cd8M|3vtC$Gc(O5_uTd6MXq<(0Y&F-F`?sS
+zr<-$6Ig#6%by8R5O{eR(rlKU-=%v#~n(8RanK8zIF;E)l<-ydM6XNttQ<wUw${3w|
+z>{8iluEu~dU<?=o#(*(k3>X8(fHCktFp#Im#2eV>eZ^kS7T05kuEnjn7z4(DF<=ZB
+z1IB<cU<?=o#(*(k3>X8(z<<zy>kDzw65{O#5j_6?Uw;4p^${U{2H%3u!5+8<cEJXC
+z7F59F;FpJmxB>RTr{Frc2KpcbQ=kH#01tp$CxrMBd<AZReXs}K1AWi|FN3GSN$|%*
+zLfiyDfbYQ9;A8L+cnfsEDp&!_U<u3t0(XuJaT~k~u7H=oGhh)c02>?!zhnQm!B5~D
+z@EQ07?12x!JAfS};5yg_yI>#ixc9*(xC56r!S~<`U|z<6F<=ZB1IB<cU<}+d13SV}
+zGViIF8VkY-c1G@ZMsKaai;_&*L0ZMw9WgTYaHnO-*TdXyR*yCc6I!WMDp7V2MlyE0
+zk{1aBvV)>ItyZZotW^DLSoeOZFwO(J@=9FcU>t`-BOMNF>n59WC5kR2zRc_iuj7U>
+z56hLiDOD!d!YnVE>l1;JdP9!Wc2&!5OY)K^l3p&@B=)Y#r3SxWohQAd6$DW)>)2WD
+zC%wG7U}5M#&aa<ejdQilAy}DomDgF%a^+=dY!7bhq<3<emT=hQI8hi&%H0haQ=pPA
+zWx4BZU{5NDk}a~)y+L72O1eHyV>s*FU<P4rb>PDe+A`0|C7O+y**c<y3L0CY3zyc`
+zsH#tGu)mSrA%rAJ3j=Jyirg$mc&_iS1i4hDK5njSx!4-^ly2Mc)N(g#*IT_{viamd
+z%z-Y>AMVpKcw#)&^Kv@xw=PPLYB3h+x>1yP_H08Bl2IlRr#_4_b=hQ@l@-s8Z@u|p
+zPFpI>p)G+fK9j*Qah_s1S{iIwC#trC^kskCS*O`Xotkw*{qVr19#sU!Nkp|``#P1T
+zJ9rKeI8Lh<Mm|MIClo{+<_8jsLoa6FR?<(R4Oc~2bDhuQvYv&XEGA*qMRlU9+~MEq
+zE*;s<*>h{FR145ZL6XY&uR29qDQ!V7S}UjFV^r<U^(HTWXvLsNcPK<PVS@1tHHK?1
+zLut&@@ORv_$n(9*=eevGVbhq`<LsKz1|5eD6OXe*Um(wLv|()X8y;C_D~f704yVeW
+zS{zMTa5V1EQ-3_$q09|^{f<Kk>(rfE)@j6VkZRQh;?E<LqQakD_6|y`diCnCo%6D2
+zuJ%!};p8L~6vs5kz#4Vohvyn*Wvxo-f<O`Gp+}nuf*BUIt?z3oN=a{~sPE!*d8Z-f
+z!$-K|_zA^HPQ6TW8Bq&0Jtj_tu^07_Vil;J?o<voY;$Ifv@Ig8Fm6wGmWSie=0_o(
+KJ=7K^-1H}lyD{zn
+
+literal 0
+HcmV?d00001
+
+diff --git a/part1/Makefile b/part1/Makefile
+index 6f530b3..00edc39 100644
+--- a/part1/Makefile
++++ b/part1/Makefile
+@@ -1,9 +1,7 @@
+ CC  = gcc
+-CXX = g++
+ 
+ INCLUDES = -I../../lab3/solutions/part1
+ CFLAGS   = -g -Wall $(INCLUDES)
+-CXXFLAGS = -g -Wall $(INCLUDES)
+ 
+ LDFLAGS = -g -L../../lab3/solutions/part1
+ LDLIBS = -lmylist
+@@ -12,7 +10,7 @@ mdb-lookup:
+ 
+ .PHONY: clean
+ clean:
+-	rm -f *.o *~ 
++	rm -f *.o mdb-lookup 
+ 
+ .PHONY: all
+ all: clean 
+diff --git a/part1/mdb-lookup b/part1/mdb-lookup
+deleted file mode 100755
+index 79697a7c326db74134fdf6337f626cd002d66e2e..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 19976
+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
+
+diff --git a/part1/mdb-lookup.c b/part1/mdb-lookup.c
+index 1247d04..2df789b 100644
+--- a/part1/mdb-lookup.c
++++ b/part1/mdb-lookup.c
+@@ -5,7 +5,7 @@
+ #include "mdb.h"
+ //do not use add back!
+ int i = 0;
+-char search[5];
++char search[1024];
+ static void printEntry(void *p){
+ 	struct MdbRec* m = (struct MdbRec*) p;
+ 	i++;
+@@ -27,7 +27,7 @@ int main(int argc, char **argv)
+ 		exit(1);
+ 	}
+ 	//init list
+-	char buf[1001];
++	char buf[1024];
+ 	struct List chain;
+ 	initList(&chain);
+ 	//build list
+@@ -47,28 +47,19 @@ int main(int argc, char **argv)
+ 	}
+ 
+ 	//loop
+-	
+ 	printf("lookup: ");
+-	while(fgets(search,5,stdin) != NULL ){
+-		if(search == NULL){
+-			break;
+-		}
+-		for(int z = 0;z<5;z++){
+-			if(search[z] == '\n')
+-				search[z] = '\0';
+-		}
+-		
+-		i = 0;
++	while(fgets(search,1024,stdin) != NULL ){
++		search[5] = 0;
++		search[strcspn(search, "\n")] = 0; //line taken from stackoverflow (link in readme)
+ 		traverseList(&chain,&printEntry);
+ 		fflush(stdout);	
+ 		printf("\nlookup: ");
+ 	}
+-	traverseList(&chain,&printEntry);
+-
+ 
++	//garbage collect
+ 	traverseList(&chain,&free);
+ 	removeAllNodes(&chain);
+-
++	//file error
+ 	printf("\n");
+ 	if (ferror(fp)) {
+ 		perror(filename);
+diff --git a/part1/x.txt b/part1/x.txt
+deleted file mode 100644
+index bbf21dc..0000000
+--- a/part1/x.txt
++++ /dev/null
+@@ -1,40 +0,0 @@
+-weed
+-weed
+-weed
+-wwwwwwwwwwwweed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-eed
+-weed
+-weed
+-
+-- 
+2.17.1
+
+
+From 25e3d314deed2cdcf7469fa8919a8de656150b53 Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Fri, 12 Mar 2021 17:59:34 -0500
+Subject: [PATCH 5/8] done????
+
+---
+ README.txt | 43 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 11 deletions(-)
+
+diff --git a/README.txt b/README.txt
+index 3347961..0a9e611 100644
+--- a/README.txt
++++ b/README.txt
+@@ -1,14 +1,35 @@
+-This file should contain:
++jay ram
++jcr2211
++lab4
+ 
+-  - your name
+-  - your UNI
+-  - lab assignment number
+-  - description for each part
+-  
+-The description should indicate whether your solution for the part is
+-working or not.  You may also want to include anything else you would
+-like to communicate to the grader such as extra functionalities you
+-implemented or how you tried to fix your non-working code.
++===PART 1===
++a) I added {name: "jay ram", msg: "add me on instagram -> @jay.cram"}. No one followed me :(
+ 
++b) I used a oneline way to remove newlines from the end from stack overflow. The link is https://stackoverflow.com/questions/2693776/removing-trailing-newline-character-from-fgets-input. I think Jae said at the beginning that like one line of code is fine to get from the internet so i think i got (sorry if this was against the rules).
+ 
+-added "add me on instagram -> @jaycram"
++Also when programming this it took longer than it shouldve just bc i went in without reading the handout. I do think i got everything exact tho.
++
++~~valgrind output~~
++		==21653== Memcheck, a memory error detector
++		==21653== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
++		==21653== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
++		==21653== Command: ./mdb-lookup /home/jae/cs3157-pub/bin/mdb-cs3157
++		==21653==
++		lookup: dog
++		 247: {Nick DC} said {happy dog happy life}
++		 248: {Nick DC} said {happy life happy dog}
++		 276: {Cindy Zhu} said {aoc dog cutre  e [C   }
++
++		lookup:
++		==21653==
++		==21653== HEAP SUMMARY:
++		==21653==     in use at exit: 0 bytes in 0 blocks
++		==21653==   total heap usage: 982 allocs, 982 frees, 34,080 bytes allocated
++		==21653==
++		==21653== All heap blocks were freed -- no leaks are possible
++		==21653==
++		==21653== For counts of detected and suppressed errors, rerun with: -v
++		==21653== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
++
++
++==PART 2== 
+-- 
+2.17.1
+
+
+From c3b5d866dff71f93660372fc2daea8b4db79217c Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Fri, 12 Mar 2021 18:00:32 -0500
+Subject: [PATCH 6/8] removed exec
+
+---
+ part1/.mdb-lookup.c.swp | Bin 12288 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 part1/.mdb-lookup.c.swp
+
+diff --git a/part1/.mdb-lookup.c.swp b/part1/.mdb-lookup.c.swp
+deleted file mode 100644
+index ce4c5ff76f22add73887ded5c89ceaf3fd47e673..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 12288
+zcmeI2PiP!f9LHbP%UG*ouY$j9NtoSiGP`M_HUA`s6sl>#N)?PnXJ_8*PBS|*yqQf5
+z+eASSOF;!sB1piaMCwt!h#)8ko`iZW1y6zqy^7!8+Zi_-wdBx?_?CQ_o%i0n_j{lB
+z`z<WlR^!EU=jqIJL*VtO5HI}p+-vu@Cd8M|3vtC$Gc(O5_uTd6MXq<(0Y&F-F`?sS
+zr<-$6Ig#6%by8R5O{eR(rlKU-=%v#~n(8RanK8zIF;E)l<-ydM6XNttQ<wUw${3w|
+z>{8iluEu~dU<?=o#(*(k3>X8(fHCktFp#Im#2eV>eZ^kS7T05kuEnjn7z4(DF<=ZB
+z1IB<cU<?=o#(*(k3>X8(z<<zy>kDzw65{O#5j_6?Uw;4p^${U{2H%3u!5+8<cEJXC
+z7F59F;FpJmxB>RTr{Frc2KpcbQ=kH#01tp$CxrMBd<AZReXs}K1AWi|FN3GSN$|%*
+zLfiyDfbYQ9;A8L+cnfsEDp&!_U<u3t0(XuJaT~k~u7H=oGhh)c02>?!zhnQm!B5~D
+z@EQ07?12x!JAfS};5yg_yI>#ixc9*(xC56r!S~<`U|z<6F<=ZB1IB<cU<}+d13SV}
+zGViIF8VkY-c1G@ZMsKaai;_&*L0ZMw9WgTYaHnO-*TdXyR*yCc6I!WMDp7V2MlyE0
+zk{1aBvV)>ItyZZotW^DLSoeOZFwO(J@=9FcU>t`-BOMNF>n59WC5kR2zRc_iuj7U>
+z56hLiDOD!d!YnVE>l1;JdP9!Wc2&!5OY)K^l3p&@B=)Y#r3SxWohQAd6$DW)>)2WD
+zC%wG7U}5M#&aa<ejdQilAy}DomDgF%a^+=dY!7bhq<3<emT=hQI8hi&%H0haQ=pPA
+zWx4BZU{5NDk}a~)y+L72O1eHyV>s*FU<P4rb>PDe+A`0|C7O+y**c<y3L0CY3zyc`
+zsH#tGu)mSrA%rAJ3j=Jyirg$mc&_iS1i4hDK5njSx!4-^ly2Mc)N(g#*IT_{viamd
+z%z-Y>AMVpKcw#)&^Kv@xw=PPLYB3h+x>1yP_H08Bl2IlRr#_4_b=hQ@l@-s8Z@u|p
+zPFpI>p)G+fK9j*Qah_s1S{iIwC#trC^kskCS*O`Xotkw*{qVr19#sU!Nkp|``#P1T
+zJ9rKeI8Lh<Mm|MIClo{+<_8jsLoa6FR?<(R4Oc~2bDhuQvYv&XEGA*qMRlU9+~MEq
+zE*;s<*>h{FR145ZL6XY&uR29qDQ!V7S}UjFV^r<U^(HTWXvLsNcPK<PVS@1tHHK?1
+zLut&@@ORv_$n(9*=eevGVbhq`<LsKz1|5eD6OXe*Um(wLv|()X8y;C_D~f704yVeW
+zS{zMTa5V1EQ-3_$q09|^{f<Kk>(rfE)@j6VkZRQh;?E<LqQakD_6|y`diCnCo%6D2
+zuJ%!};p8L~6vs5kz#4Vohvyn*Wvxo-f<O`Gp+}nuf*BUIt?z3oN=a{~sPE!*d8Z-f
+z!$-K|_zA^HPQ6TW8Bq&0Jtj_tu^07_Vil;J?o<voY;$Ifv@Ig8Fm6wGmWSie=0_o(
+KJ=7K^-1H}lyD{zn
+
+-- 
+2.17.1
+
+
+From 35f88041c0204ec74852b3c69b7b7adc69f8bbea Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Sat, 13 Mar 2021 11:58:55 -0500
+Subject: [PATCH 7/8] +bugfix and mdb-add implemented
+
+---
+ part1/Makefile     |  4 +++-
+ part1/mdb-add.c    | 55 ++++++++++++++++++++++++++++++++++++++++++++++
+ part1/mdb-lookup.c |  1 +
+ 3 files changed, 59 insertions(+), 1 deletion(-)
+ create mode 100644 part1/mdb-add.c
+
+diff --git a/part1/Makefile b/part1/Makefile
+index 00edc39..d8b3252 100644
+--- a/part1/Makefile
++++ b/part1/Makefile
+@@ -8,9 +8,11 @@ LDLIBS = -lmylist
+ 
+ mdb-lookup:
+ 
++mdb-add:
++
+ .PHONY: clean
+ clean:
+-	rm -f *.o mdb-lookup 
++	rm -f *.o mdb-lookup mdb-add 
+ 
+ .PHONY: all
+ all: clean 
+diff --git a/part1/mdb-add.c b/part1/mdb-add.c
+new file mode 100644
+index 0000000..2c305ed
+--- /dev/null
++++ b/part1/mdb-add.c
+@@ -0,0 +1,55 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include "mdb.h"
++
++int main(int argc, char **argv)
++{
++	//read file	
++	if (argc != 2) {
++		fprintf(stderr, "%s\n", "usage: mdb-add <file_name>");
++		exit(1);
++	}
++	char *filename = argv[1];
++	FILE *fp = fopen(filename, "a");
++	if (fp == NULL) {
++		perror(filename);
++		exit(1);
++	}
++
++	//input
++	char name[1024];
++	char msg[1024];
++	printf("name please (will truncate to 15 chars): ");
++	fgets(name,1024,stdin);
++	printf("msg please (will truncate to 23 chars): ");
++	fgets(msg,1024,stdin);
++	
++	//processing
++	name[15] = 0;
++	msg[23] = 0;
++	name[strcspn(name, "\n")] = 0;
++	msg[strcspn(msg, "\n")] = 0; 
++	struct MdbRec* m = malloc(40);
++	strcpy(m->name,name);
++	strcpy(m->msg,msg);
++	
++	//appending
++	fwrite(m,1,40,fp);
++	fseek(fp, 0L, SEEK_END);
++	
++	//get line #
++	int n = ftell(fp)/40; 
++	printf(" %d: {%s} said {%s}",n,m->name,m->msg);
++	
++	//garbage collection
++	free(m);
++	//file error
++	printf("\n");
++	if (ferror(fp)) {
++		perror(filename);
++		exit(1);
++	}
++	fclose(fp);
++	return 0;
++}
+diff --git a/part1/mdb-lookup.c b/part1/mdb-lookup.c
+index 2df789b..62bae65 100644
+--- a/part1/mdb-lookup.c
++++ b/part1/mdb-lookup.c
+@@ -50,6 +50,7 @@ int main(int argc, char **argv)
+ 	printf("lookup: ");
+ 	while(fgets(search,1024,stdin) != NULL ){
+ 		search[5] = 0;
++		i = 0;
+ 		search[strcspn(search, "\n")] = 0; //line taken from stackoverflow (link in readme)
+ 		traverseList(&chain,&printEntry);
+ 		fflush(stdout);	
+-- 
+2.17.1
+
+
+From 52f08022de0ce65cfbd4b40c9c66e18dea6be7f7 Mon Sep 17 00:00:00 2001
+From: Jay Ram <jcr2211@clac.cs.columbia.edu>
+Date: Mon, 15 Mar 2021 19:21:17 -0400
+Subject: [PATCH 8/8] added finishing touches that are hopefully worth 2 late
+ days lol
+
+---
+ README.txt         | 19 +++++++++++++++++++
+ part1/mdb-add.c    | 10 ++++------
+ part1/mdb-lookup.c | 23 ++++++++++++++---------
+ 3 files changed, 37 insertions(+), 15 deletions(-)
+
+diff --git a/README.txt b/README.txt
+index 0a9e611..02bddaa 100644
+--- a/README.txt
++++ b/README.txt
+@@ -31,5 +31,24 @@ Also when programming this it took longer than it shouldve just bc i went in wit
+ 		==21653== For counts of detected and suppressed errors, rerun with: -v
+ 		==21653== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+ 
++mdb-add is implemented and returns valgrind clean
+ 
++~~valgrind output~~
++		==31636== Memcheck, a memory error detector
++		==31636== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
++		==31636== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
++		==31636== Command: ./mdb-add db
++		==31636==
++		yname please (will truncate to 15 chars): yonkerarjajor
++		msg please (will truncate to 23 chars): sponerairajoiaj
++		 1: {yyonkerarjajor} said {sponerairajoiaj}
++		==31636==
++		==31636== HEAP SUMMARY:
++		==31636==     in use at exit: 0 bytes in 0 blocks
++		==31636==   total heap usage: 5 allocs, 5 frees, 10,832 bytes allocated
++		==31636==
++		==31636== All heap blocks were freed -- no leaks are possible
++		==31636==
++		==31636== For counts of detected and suppressed errors, rerun with: -v
++		==31636== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+ ==PART 2== 
+diff --git a/part1/mdb-add.c b/part1/mdb-add.c
+index 2c305ed..04704b6 100644
+--- a/part1/mdb-add.c
++++ b/part1/mdb-add.c
+@@ -11,7 +11,7 @@ int main(int argc, char **argv)
+ 		exit(1);
+ 	}
+ 	char *filename = argv[1];
+-	FILE *fp = fopen(filename, "a");
++	FILE *fp = fopen(filename, "ab");
+ 	if (fp == NULL) {
+ 		perror(filename);
+ 		exit(1);
+@@ -31,12 +31,10 @@ int main(int argc, char **argv)
+ 	name[strcspn(name, "\n")] = 0;
+ 	msg[strcspn(msg, "\n")] = 0; 
+ 	struct MdbRec* m = malloc(40);
+-	strcpy(m->name,name);
+-	strcpy(m->msg,msg);
+-	
++	strncpy(m->name,name,16);
++	strncpy(m->msg,msg,24);
+ 	//appending
+-	fwrite(m,1,40,fp);
+-	fseek(fp, 0L, SEEK_END);
++	fwrite(m,40,1,fp);
+ 	
+ 	//get line #
+ 	int n = ftell(fp)/40; 
+diff --git a/part1/mdb-lookup.c b/part1/mdb-lookup.c
+index 62bae65..ffe24fa 100644
+--- a/part1/mdb-lookup.c
++++ b/part1/mdb-lookup.c
+@@ -3,13 +3,12 @@
+ #include <string.h>
+ #include "mylist.h"
+ #include "mdb.h"
+-//do not use add back!
+ int i = 0;
+ char search[1024];
+ static void printEntry(void *p){
+ 	struct MdbRec* m = (struct MdbRec*) p;
+ 	i++;
+-	if(strstr(m->name,search)||strstr(m->msg,search)){	
++	if (strstr(m->name,search)||strstr(m->msg,search)){	
+ 		printf(" %d: {%s} said {%s}\n",i, m->name, m->msg); 
+ 	}
+ }
+@@ -26,10 +25,12 @@ int main(int argc, char **argv)
+ 		perror(filename);
+ 		exit(1);
+ 	}
++	
+ 	//init list
+ 	char buf[1024];
+ 	struct List chain;
+ 	initList(&chain);
++
+ 	//build list
+ 	struct Node *last = chain.head;
+ 	while (fread(buf, 40, 1, fp) == 1) {
+@@ -38,28 +39,32 @@ int main(int argc, char **argv)
+ 			exit(1);
+ 		}
+ 		else{
+-			struct MdbRec *n = malloc(40);
+-		
+-			strcpy(n->name,buf);
+-			strcpy(n->msg,buf+16);	
++			struct MdbRec *n = malloc(40);	
++			strncpy(n->name,buf,16);
++			strncpy(n->msg,buf+16,24);	
+ 			last = addAfter(&chain,last,n);
+ 		}
+ 	}
+ 
+ 	//loop
+ 	printf("lookup: ");
+-	while(fgets(search,1024,stdin) != NULL ){
++	while (fgets(search,1024,stdin) != NULL){
+ 		search[5] = 0;
+ 		i = 0;
+-		search[strcspn(search, "\n")] = 0; //line taken from stackoverflow (link in readme)
++		search[strcspn(search, "\n")] = 0; //line taken from stackoverflow 
+ 		traverseList(&chain,&printEntry);
+ 		fflush(stdout);	
+ 		printf("\nlookup: ");
+ 	}
+-
++	if (ferror(stdin)){
++		perror("can't read from stdin");
++		exit(1);
++	}
++	
+ 	//garbage collect
+ 	traverseList(&chain,&free);
+ 	removeAllNodes(&chain);
++
+ 	//file error
+ 	printf("\n");
+ 	if (ferror(fp)) {
+-- 
+2.17.1
+
